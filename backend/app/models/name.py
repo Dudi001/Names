@@ -8,7 +8,7 @@ from .base import Base
 class Name(Base):
     """Таблица name_ru.names_test"""
 
-    __tablename__ = "names_test"
+    __tablename__ = "names"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name_ar: Mapped[str] = mapped_column(String(50))
