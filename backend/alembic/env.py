@@ -4,16 +4,10 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from app.config.config import settings
 from app.config.database import DATABASE_URL
 from app.models.base import Base
 from app.models.name import Name
 
-
-# DATABASE_URL = (
-#     f"postgresql+asyncpg://{settings.db_user}:{settings.db_password}"
-#     f"@{settings.db_host}:{settings.db_port}/{settings.db_name}"
-# )
 
 config = context.config
 
