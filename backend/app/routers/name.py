@@ -14,8 +14,7 @@ worker = APIRouter()
 
 @worker.get("/names", response_model=list[NameTestSchema])
 async def get_users(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Name).limit(10))
-    # users = result.scalars().all()
+    result = await db.execute(select(Name).limit(2))
     rows: Sequence[Row[tuple]] = result.all()
     result: list[dict[str, Any]] = [row._asdict() for row in rows]
     return create_http_response(Http200(jsonable_encoder(result)))
