@@ -69,29 +69,57 @@
       content: "☀️";
     }
 
-    /* Для правильного выравнивания контейнера с деталями */
-    #detailsContainer {
-      position: relative;
+/* Обновленные стили модального окна */
+.modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+      padding: 20px;
+      box-sizing: border-box;
     }
     
-    @media (min-width: 1024px) {
-      #details {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-      }
+    .modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+    
+    .modal.active .modal-content {
+      transform: scale(1);
+    }
+    
+    .dark .modal-content {
+      background-color: #1f2937;
     }
   </style>
 </head>
-<body class="font-sans transition-colors duration-300 bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
+<body class="font-sans transition-colors duration-300 bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
 
   <div class="max-w-7xl mx-auto p-6">
-    <div class="flex justify-between items-center mb-6">
-      <!-- Убрал заголовок отсюда -->
-      <div class="w-full lg:w-auto"></div>
+    <div class="flex justify-end items-center mb-6">
       <!-- Тема -->
-      <div class="ml-auto flex items-center">
+      <div class="flex items-center">
         <span class="mr-2 dark:text-gray-300">Тема:</span>
         <label class="theme-switch">
           <input type="checkbox" id="themeToggle">
@@ -101,184 +129,46 @@
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-      <!-- Левая часть -->
-      <div class="lg:col-span-7">
-        <div class="text-center mb-6" id="searchContainer">
-          <h1 class="text-3xl font-bold mb-4">99 имён Аллаха</h1>
-          <input
-            type="text"
-            id="search"
-            placeholder="Найти имя…"
-            class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-          />
+      <!-- Центральная часть с именами -->
+      <div class="lg:col-span-8 lg:col-start-3">
+        <!-- Заголовок и поиск по центру -->
+        <div class="text-center mb-8" id="searchContainer">
+          <h1 class="text-4xl font-bold mb-6">99 имён Аллаха</h1>
+          <div class="max-w-xl mx-auto">
+            <input
+              type="text"
+              id="search"
+              placeholder="Найти имя…"
+              class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+          </div>
         </div>
-        <div id="names" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div>
-      </div>
-
-      <!-- Правая часть -->
-      <div id="detailsContainer" class="lg:col-span-5 transition-all">
-        <div id="details" class="p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow hidden transition-all relative">
-          <button id="closeDetails" class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
-            ✕
-          </button>
-          <h2 id="arabic" class="text-3xl font-bold mb-2"></h2>
-          <h3 id="transliteration" class="text-xl font-semibold"></h3>
-          <p id="translation" class="text-md text-gray-600 dark:text-gray-300 mb-4"></p>
-          <p id="tafsir" class="text-md whitespace-pre-line leading-relaxed"></p>
+        
+        <!-- Сетка с именами -->
+        <div id="names" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div class="loading col-span-full">
+            <div class="loading-spinner"></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <script>
-    const names = [
-      {
-        arabic: "الرَّحْمٰنُ",
-        transliteration: "Ar-Rahman",
-        translation: "Всемилостивый",
-        tafsir: "Аллах Ар-Рахман — Тот, Чья милость охватывает всё творение. Это имя указывает на безграничную милость Аллаха, которая распространяется на всех Его созданий без исключения, будь то верующие или неверующие, праведники или грешники. Милость Аллаха охватывает всё сущее, и именно благодаря этой милости существует всё мироздание."
-      },
-      {
-        arabic: "الرَّحِيمُ",
-        transliteration: "Ar-Rahim",
-        translation: "Милосердный",
-        tafsir: "Аллах Ар-Рахим — Тот, Чья милость направлена особенно на верующих. В отличие от имени Ар-Рахман, которое обозначает всеобщую милость, имя Ар-Рахим указывает на особую милость Аллаха, которую Он дарует своим верующим рабам в этой жизни и особенно в Последней жизни."
-      },
-      {
-        arabic: "الْمَلِكُ",
-        transliteration: "Al-Malik",
-        translation: "Властелин",
-        tafsir: "Аллах Аль-Малик — Царь царей, Владыка всего сущего. Это имя указывает на абсолютную власть Аллаха над всем творением. Он управляет всеми делами, и никто не может вмешаться в Его решения. Все цари и правители получают свою власть только по воле Аллаха."
-      },
-      {
-        arabic: "الْقُدُّوسُ",
-        transliteration: "Al-Quddus",
-        translation: "Святой",
-        tafsir: "Аллах Аль-Куддус — Пресвятой, Чистый от любых недостатков. Это имя означает, что Аллах превыше любых недостатков, изъянов и несовершенств, которые могут быть присущи творениям. Он совершенен во всех отношениях — в Своей сущности, атрибутах и действиях."
-      },
-      {
-        arabic: "السَّلَامُ",
-        transliteration: "As-Salam",
-        translation: "Дарующий мир и безопасность",
-        tafsir: "Аллах Ас-Салям — Источник мира и безопасности. Это имя означает, что Аллах Сам свободен от любых недостатков, и Он дарует мир и безопасность своим рабам. От Него исходит всякое благополучие, и к Нему возвращается всё сущее."
-      },
-      {
-        arabic: "الْمُؤْمِنُ",
-        transliteration: "Al-Mu'min",
-        translation: "Дарующий безопасность",
-        tafsir: "Аллах Аль-Мумин — Тот, Кто дарует безопасность Своим рабам. Это имя означает, что Аллах защищает верующих от несправедливости в этом мире и дарует им безопасность в Последней жизни. Он также подтверждает истинность Своих посланников, ниспосылая им знамения."
-      },
-      {
-        arabic: "الْجَبَّارُ",
-        transliteration: "Al-Jabbar",
-        translation: "Могущественный",
-        tafsir: "Аллах Аль-Джаббар — Могущественный, Подчиняющий. Это имя означает, что Аллах подчиняет Себе всё творение, и никто не может противостоять Его воле. Он исправляет дела Своих рабов, восстанавливает то, что было сломано, и возвышает истину над ложью."
-      },
-      {
-        arabic: "الْمُتَكَبِّرُ",
-        transliteration: "Al-Mutakabbir",
-        translation: "Превознесшийся",
-        tafsir: "Аллах Аль-Мутакаббир — Превознесшийся над творениями. Это имя означает, что Аллах превыше всех Своих созданий, и никто не достоин поклонения, кроме Него. Он проявляет Своё величие во всех аспектах, и все творения признают Его превосходство."
-      },
-      {
-        arabic: "الْخَالِقُ",
-        transliteration: "Al-Khaliq",
-        translation: "Создатель",
-        tafsir: "Аллах Аль-Халик — Творец, Который создаёт всё из небытия. Это имя означает, что Аллах создаёт всё сущее в совершенном виде, определяя для каждой вещи её особенности и свойства. Он творит без примера и образца, и Его творения свидетельствуют о Его мудрости и могуществе."
-      }
-    ];
+  <!-- Модальное окно для деталей (на мобильных) -->
+  <div id="detailsModal" class="modal">
+    <div class="modal-content bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+      <div class="flex justify-between items-center mb-4">
+        <h2 id="modalArabic" class="text-3xl font-bold"></h2>
+        <button id="closeModal" class="w-8 h-8 flex items-center justify-center bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+          ✕
+        </button>
+      </div>
+      <h3 id="modalTransliteration" class="text-xl font-semibold"></h3>
+      <p id="modalTranslation" class="text-md text-gray-600 dark:text-gray-300 mb-4"></p>
+      <p id="modalTafsir" class="text-md whitespace-pre-line leading-relaxed"></p>
+    </div>
+  </div>
 
-    const namesContainer = document.getElementById("names");
-    const searchInput = document.getElementById("search");
-    const details = document.getElementById("details");
-    const detailsContainer = document.getElementById("detailsContainer");
-    const arabic = document.getElementById("arabic");
-    const transliteration = document.getElementById("transliteration");
-    const translation = document.getElementById("translation");
-    const tafsir = document.getElementById("tafsir");
-    const closeButton = document.getElementById("closeDetails");
-    const themeToggle = document.getElementById("themeToggle");
-    const searchContainer = document.getElementById("searchContainer");
-
-    function renderNames(filter = "") {
-      namesContainer.innerHTML = "";
-      names
-        .filter((name) =>
-          name.transliteration.toLowerCase().includes(filter.toLowerCase()) ||
-          name.translation.toLowerCase().includes(filter.toLowerCase())
-        )
-        .forEach((name) => {
-          const card = document.createElement("div");
-          card.className =
-            "bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-4 rounded-lg shadow hover:shadow-md transition cursor-pointer text-center";
-          card.innerHTML = `
-            <div class="text-2xl font-bold mb-2">${name.arabic}</div>
-            <div class="font-semibold text-lg">${name.transliteration}</div>
-            <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">${name.translation}</div>
-            <button class="px-3 py-1 bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white rounded-md shadow-sm transition-all">Подробнее</button>
-          `;
-          card.querySelector("button").addEventListener("click", () => showDetails(name));
-          namesContainer.appendChild(card);
-        });
-    }
-
-    function alignDetailsWithSearch() {
-      if (window.innerWidth >= 1024) {
-        // Найти верхнюю позицию поля поиска
-        const searchInputTop = searchInput.getBoundingClientRect().top + window.scrollY;
-        const searchContainerTop = searchContainer.getBoundingClientRect().top + window.scrollY;
-        
-        // Найти высоту заголовка над полем поиска (h1)
-        const searchHeading = searchContainer.querySelector("h1");
-        const headingHeight = searchHeading.offsetHeight + parseInt(window.getComputedStyle(searchHeading).marginBottom);
-        
-        // Установить верхнюю позицию детального блока равной верхней границе поля поиска
-        detailsContainer.style.marginTop = `${headingHeight}px`;
-      } else {
-        detailsContainer.style.marginTop = '0';
-      }
-    }
-
-    function showDetails(name) {
-      arabic.textContent = name.arabic;
-      transliteration.textContent = name.transliteration;
-      translation.textContent = name.translation;
-      tafsir.textContent = name.tafsir;
-      details.classList.remove("hidden");
-      
-      alignDetailsWithSearch();
-      
-      if (window.innerWidth < 1024) {
-        details.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-
-    closeButton.addEventListener("click", () => {
-      details.classList.add("hidden");
-    });
-
-    searchInput.addEventListener("input", (e) => renderNames(e.target.value));
-    renderNames();
-
-    // Проверка текущей темы при загрузке страницы
-    if (document.documentElement.classList.contains("dark")) {
-      themeToggle.checked = true;
-    }
-
-    // Переключение темы
-    themeToggle.addEventListener("change", () => {
-      document.documentElement.classList.toggle("dark");
-    });
-    
-    // Обработка изменения размера окна
-    window.addEventListener("resize", () => {
-      if (!details.classList.contains("hidden")) {
-        alignDetailsWithSearch();
-      }
-    });
-    
-    // Начальное выравнивание после загрузки страницы
-    window.addEventListener("load", alignDetailsWithSearch);
-  </script>
+  <script src="./main.js"></script>
 </body>
 </html>

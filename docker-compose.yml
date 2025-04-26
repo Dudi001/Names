@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: ./backend  # Путь к директории с бэкендом
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    env_file:
+      - ./backend/app/config/.env
+    networks:
+      - app-network
+  
+  frontend:
+    build:
+      context: ./frontend  # Путь к директории с фронтендом
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
