@@ -1,8 +1,7 @@
 FROM nginx:alpine
 
 # Копируем нашу HTML страницу
-COPY index.html /usr/share/nginx/html/
-COPY main.js /usr/share/nginx/html/
+COPY . /usr/share/nginx/html/
 
 # Копируем файл конфигурации Nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf

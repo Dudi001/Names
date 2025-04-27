@@ -1,0 +1,129 @@
+/* Стили для переключателя темы */
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+  }
+  
+  .theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "🌙";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(30px);
+    content: "☀️";
+  }
+
+  /* Обновленные стили модального окна */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .modal.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .dark .modal-content {
+    background-color: #1f2937;
+  }
+
+  .modal-content {
+    background: white;
+    border-radius: 12px;
+    /*box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);*/
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    width: 100%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    transform: translateY(-20px) scale(0.95);
+    opacity: 0;
+    transition: all 0.4s ease;
+  }
+  
+  /* Когда модалка активна */
+  .modal.active .modal-content {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* или без него */
+    height: 100%;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .card-content {
+    flex-grow: 1;
+  }
+  
+  .card-button {
+    margin-top: auto;
+  }
+  
+  .card-tilt {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    will-change: transform;
+  }
+  
+  
+  .card-tilt:hover {
+    transform: rotateX(8deg) rotateY(8deg) scale(1.02);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  }
+  
