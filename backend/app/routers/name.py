@@ -6,8 +6,10 @@ from app.config.database import get_db
 from app.config.responses import create_http_response, Http200
 from app.models.name import Name
 from app.schema.name import NameTestSchema
+# from app.packages.card_remember import FlashcardManager
 from typing import Any, Sequence
 from fastapi.encoders import jsonable_encoder
+
 
 worker = APIRouter()
 
@@ -19,6 +21,10 @@ async def get_users(db: AsyncSession = Depends(get_db)):
     result: list[dict[str, Any]] = [row._asdict() for row in rows]
     return create_http_response(Http200(jsonable_encoder(result)))
 
+
+# @worker.get("/card_remember")
+# async def get_card(db: AsyncSession = Depends(get_db)):
+#     card = FlashcardManager()
 
 @worker.get("/test", response_model=list[NameTestSchema])
 async def test(db: AsyncSession = Depends(get_db)):
