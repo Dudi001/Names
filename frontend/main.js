@@ -1,3 +1,4 @@
+// main.js
 console.log("main.js загружен!");
 const namesContainer = document.getElementById("names");
 const searchInput = document.getElementById("search");

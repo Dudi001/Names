@@ -23,7 +23,12 @@
 <body class="font-sans transition-colors duration-300 bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
 
   <div class="max-w-7xl mx-auto p-6">
-    <div class="flex justify-end items-center mb-6">
+    <div class="flex justify-between items-center mb-6">
+      <!-- Кнопка для начала обучения -->
+      <button id="startLearning" class="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-bold py-2 px-6 rounded-md transition-all">
+        Изучать имена
+      </button>
+      
       <!-- Тема -->
       <div class="flex items-center">
         <span class="mr-2 dark:text-gray-300">Тема:</span>
@@ -75,6 +80,107 @@
     </div>
   </div>
 
+  <!-- Модальное окно для изучения имен -->
+  <div id="flashcardModal" class="modal">
+    <div class="modal-content bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-2xl">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold">Изучение имён Аллаха</h2>
+        <div class="flex items-center">
+          <span id="cardCounter" class="mr-4 text-gray-600 dark:text-gray-300">0/0</span>
+          <button id="closeFlashcardModal" class="w-8 h-8 flex items-center justify-center bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+            ✕
+          </button>
+        </div>
+      </div>
+      
+      <!-- Модуль карточки -->
+      <div id="flashcardContainer" class="mb-8 flex flex-col items-center">
+        <div id="modeSelector" class="mb-6 w-full">
+          <label class="block text-gray-700 dark:text-gray-300 mb-2">Режим изучения:</label>
+          <select id="learningMode" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
+            <option value="transcription_to_translation">Транскрипция → Перевод</option>
+            <option value="translation_to_transcription">Перевод → Транскрипция</option>
+            <option value="arabic_to_translation">Арабское написание → Перевод</option>
+            <option value="translation_to_arabic">Перевод → Арабское написание</option>
+          </select>
+        </div>
+
+        <!-- Статистика -->
+        <div id="learningStats" class="w-full mb-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg hidden">
+          <div class="flex justify-between">
+            <div>
+              <span class="font-semibold">Всего имён:</span>
+              <span id="statTotal">0</span>
+            </div>
+            <div>
+              <span class="font-semibold">Изучено:</span>
+              <span id="statLearned">0</span>
+            </div>
+            <div>
+              <span class="font-semibold">На сегодня:</span>
+              <span id="statDueToday">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Начальное состояние -->
+        <div id="startLearningPrompt" class="text-center p-6">
+          <p class="mb-4">Выберите режим изучения и нажмите кнопку ниже, чтобы начать.</p>
+          <button id="initLearning" class="bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold py-3 px-8 rounded-lg transition-all">
+            Начать изучение
+          </button>
+        </div>
+
+        <!-- Карточка для изучения -->
+        <div id="flashcard" class="hidden w-full perspective-1000 mb-6">
+          <div class="card-inner w-full h-64 relative transition-transform duration-700 transform-style-preserve-3d">
+            <div class="card-front absolute w-full h-full flex items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 backface-hidden">
+              <div class="text-center">
+                <h3 id="cardFrontType" class="text-sm text-gray-500 dark:text-gray-400 mb-2">Транскрипция</h3>
+                <p id="cardFrontContent" class="text-3xl font-bold"></p>
+              </div>
+            </div>
+            <div class="card-back absolute w-full h-full flex items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 backface-hidden rotate-y-180">
+              <div class="text-center">
+                <h3 id="cardBackType" class="text-sm text-gray-500 dark:text-gray-400 mb-2">Перевод</h3>
+                <p id="cardBackContent" class="text-3xl font-bold"></p>
+              </div>
+            </div>
+          </div>
+          <button id="showAnswer" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg transition-all mt-4">
+            Показать ответ
+          </button>
+        </div>
+
+        <!-- Оценка ответа -->
+        <div id="ratingContainer" class="hidden w-full">
+          <p class="text-center mb-4">Насколько хорошо вы знали ответ?</p>
+          <div class="grid grid-cols-3 gap-2 mb-4">
+            <button data-quality="0" class="rating-btn bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg">Не знал</button>
+            <button data-quality="3" class="rating-btn bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-lg">С трудом</button>
+            <button data-quality="5" class="rating-btn bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg">Знал</button>
+          </div>
+        </div>
+
+        <!-- Сообщения -->
+        <div id="flashcardMessage" class="hidden w-full p-4 rounded-lg mb-6">
+          <p id="flashcardMessageText" class="text-center"></p>
+        </div>
+
+        <!-- Кнопки управления -->
+        <div id="flashcardControls" class="hidden w-full flex justify-between">
+          <button id="finishLearning" class="bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white font-bold py-2 px-6 rounded-lg transition-all">
+            Завершить
+          </button>
+          <button id="nextCard" class="hidden bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition-all">
+            Следующая карточка
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="./main.js"></script>
+  <script src="./flashcards.js"></script>
 </body>
 </html>

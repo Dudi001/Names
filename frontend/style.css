@@ -126,4 +126,226 @@
     transform: rotateX(8deg) rotateY(8deg) scale(1.02);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
   }
+
+/* Стили для flashcards */
+.perspective-1000 {
+    perspective: 1000px;
+  }
   
+  .transform-style-preserve-3d {
+    transform-style: preserve-3d;
+  }
+  
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+  
+  .card-inner.flipped {
+    transform: rotateY(180deg);
+  }
+  
+  .rating-btn {
+    transition: all 0.2s ease;
+  }
+  
+  .rating-btn:hover {
+    transform: translateY(-2px);
+  }
+  
+  .flashcard-success {
+    background-color: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: #16a34a;
+  }
+  
+  .flashcard-warning {
+    background-color: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: #d97706;
+  }
+  
+  .flashcard-error {
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #dc2626;
+  }
+  
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    margin: 20px auto;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid #3498db;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .dark .flashcard-success {
+    background-color: rgba(34, 197, 94, 0.2);
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    color: #4ade80;
+  }
+  
+  .dark .flashcard-warning {
+    background-color: rgba(245, 158, 11, 0.2);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    color: #fbbf24;
+  }
+  
+  .dark .flashcard-error {
+    background-color: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #f87171;
+  }
+  
+  /* Модальные окна */
+.modal {
+    display: none; /* По умолчанию скрыто */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    overflow-y: auto;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px;
+    animation: modalFadeIn 0.3s;
+}
+
+/* Стили для карточек */
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+.card-inner {
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card-inner.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    backface-visibility: hidden;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+}
+
+/* Стили для сообщений */
+.flashcard-success {
+    background-color: #d1fae5;
+    color: #065f46;
+    border-left: 4px solid #10b981;
+}
+
+.flashcard-warning {
+    background-color: #fef3c7;
+    color: #92400e;
+    border-left: 4px solid #f59e0b;
+}
+
+.flashcard-error {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border-left: 4px solid #ef4444;
+}
+
+/* Стили для загрузки */
+.loading-spinner {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: #3b82f6;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes modalFadeIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Стили для переключателя темы */
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #3b82f6;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Стили для карточек с эффектом наклона */
+.card-tilt {
+    transform-style: preserve-3d;
+    transition: transform 0.2s ease;
+}

@@ -1,8 +1,10 @@
+# app/packages/card.py
 import datetime
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, insert, update, func, case, and_
+from sqlalchemy import select, update, func, case, and_
+from sqlalchemy.dialects.postgresql import insert
 from app.models.name import Name
-from backend.app.models.learn_progress import LearningProgress
+from app.models.learn_progress import LearningProgress
 from app.models.user import User
 from typing import List, Dict, Optional
 
@@ -45,7 +47,9 @@ class FlashcardManager:
                     last_reviewed=today,
                     due_date=today
                 )
-                .on_conflict_do_nothing()
+                .on_conflict_do_nothing(
+                    constraint='uq_user_name_mode'
+                )
             )
             await self.db.execute(stmt)
 
@@ -147,13 +151,12 @@ class FlashcardManager:
                 new_interval = round(progress.interval * progress.easiness)
             new_repetitions = progress.repetitions + 1
 
-        # 3. Обновляем easiness
+        # 3. Обновляем начальный коэффицент легкости
         if quality >= 3:
             new_easiness = progress.easiness + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02))
             new_easiness = max(new_easiness, 1.3)
         else:
             new_easiness = progress.easiness
-
 
         # 4. Обновляем даты
         today = datetime.date.today()
