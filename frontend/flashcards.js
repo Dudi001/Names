@@ -1,19 +1,26 @@
 // flashcards.js - Модуль для работы с карточками интервального повторения
-
+document.addEventListener('DOMContentLoaded', () => {
+    const initBtn = document.getElementById('initLearning');
+    if (initBtn) {
+      initBtn.addEventListener('click', startLearning);
+    } else {
+      console.error('Кнопка initLearning не найдена');
+    }
+  
+    function startLearning() {
+      console.log('Начинаем обучение');
+      // Здесь твоя логика старта
+    }
 // DOM элементы
-const flashcardModal = document.getElementById("flashcardModal");
-const closeFlashcardModalBtn = document.getElementById("closeFlashcardModal");
-const startLearningBtn = document.getElementById("startLearning");
-const initLearningBtn = document.getElementById("initLearning");
 const learningModeSelect = document.getElementById("learningMode");
 const flashcard = document.getElementById("flashcard");
 const showAnswerBtn = document.getElementById("showAnswer");
 const startLearningPrompt = document.getElementById("startLearningPrompt");
+const initLearningBtn = document.getElementById("initLearning");
 const ratingContainer = document.getElementById("ratingContainer");
 const flashcardControls = document.getElementById("flashcardControls");
 const finishLearningBtn = document.getElementById("finishLearning");
 const nextCardBtn = document.getElementById("nextCard");
-const cardCounter = document.getElementById("cardCounter");
 const flashcardMessage = document.getElementById("flashcardMessage");
 const flashcardMessageText = document.getElementById("flashcardMessageText");
 const learningStats = document.getElementById("learningStats");
@@ -34,21 +41,6 @@ let userID = 1; // В идеале это должно приходить из �
 
 // Базовый URL API
 const API_BASE_URL = '/api/v1';
-
-// Открытие/закрытие модального окна
-startLearningBtn.addEventListener("click", () => {
-    openFlashcardModal();
-});
-
-closeFlashcardModalBtn.addEventListener("click", () => {
-    closeFlashcardModal();
-});
-
-flashcardModal.addEventListener("click", function(e) {
-    if (e.target === flashcardModal) {
-        closeFlashcardModal();
-    }
-});
 
 // Выбор режима обучения
 learningModeSelect.addEventListener("change", function() {
@@ -170,27 +162,11 @@ nextCardBtn.addEventListener("click", () => {
 
 // Завершение обучения
 finishLearningBtn.addEventListener("click", () => {
-    closeFlashcardModal();
+    // Перенаправляем пользователя на главную страницу
+    window.location.href = "index.html";
 });
 
 // Функции
-
-function openFlashcardModal() {
-    flashcardModal.classList.add("active");
-    document.body.style.overflow = "hidden";
-    
-    // Сбрасываем состояние интерфейса
-    resetFlashcardInterface();
-}
-
-function closeFlashcardModal() {
-    flashcardModal.classList.remove("active");
-    document.body.style.overflow = "";
-    
-    // Сбрасываем состояние карточек
-    resetFlashcardState();
-}
-
 function resetFlashcardInterface() {
     // Показываем стартовый экран
     startLearningPrompt.classList.remove("hidden");
@@ -216,9 +192,6 @@ function resetFlashcardState() {
 }
 
 function showCard(card) {
-    // Обновляем счетчик карточек
-    cardCounter.textContent = `${currentCardIndex + 1}/${currentCards.length}`;
-    
     // Сбрасываем поворот карточки
     cardInner.classList.remove("flipped");
     
@@ -284,22 +257,21 @@ function showLoadingState(message = "Загрузка...") {
 
 function showSuccessMessage(message) {
     flashcardMessage.classList.remove("hidden");
-    flashcardMessage.className = "w-full p-4 rounded-lg mb-6 flashcard-success";
+    flashcardMessage.className = "w-full p-4 rounded-lg mb-6 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-100";
     flashcardMessageText.textContent = message;
 }
 
 function showWarningMessage(message) {
     flashcardMessage.classList.remove("hidden");
-    flashcardMessage.className = "w-full p-4 rounded-lg mb-6 flashcard-warning";
+    flashcardMessage.className = "w-full p-4 rounded-lg mb-6 bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-100";
     flashcardMessageText.textContent = message;
 }
 
 function showErrorMessage(message) {
     flashcardMessage.classList.remove("hidden");
-    flashcardMessage.className = "w-full p-4 rounded-lg mb-6 flashcard-error";
+    flashcardMessage.className = "w-full p-4 rounded-lg mb-6 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-100";
     flashcardMessageText.textContent = message;
 }
-
 
 function showCompletionMessage() {
     flashcard.classList.add("hidden");
@@ -332,31 +304,6 @@ function toggleRatingButtons(enabled) {
 /**
  * Инициализирует карточки для изучения в текущем режиме
  */
-// async function initializeLearning() {
-//     try {
-//         const response = await fetch(`${API_BASE_URL}/flashcards/initialize`, {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({
-//                 user_id: userID,
-//                 mode: currentMode
-//             })
-//         });
-
-//         if (!response.ok) {
-//             const errorData = await response.json();
-//             throw new Error(errorData.detail || 'Ошибка при инициализации карточек');
-//         }
-
-//         return await response.json();
-//     } catch (error) {
-//         console.error('Ошибка при инициализации карточек:', error);
-//         throw new Error('Не удалось инициализировать карточки для изучения');
-//     }
-// }
-
 async function initializeLearning() {
     try {
         const response = await fetch(`${API_BASE_URL}/flashcards/initialize`, {
@@ -388,7 +335,6 @@ async function initializeLearning() {
         throw new Error('Не удалось инициализировать карточки для изучения');
     }
 }
-
 
 /**
  * Загружает статистику изучения для текущего пользователя
@@ -474,3 +420,4 @@ async function reviewCard(nameId, quality) {
         throw new Error('Не удалось сохранить оценку карточки');
     }
 }
+});
