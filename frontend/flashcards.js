@@ -315,36 +315,39 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // Контроллер для связи модели данных и представления
     const controller = {
-      /**
-       * Инициализирует обучение
-       */
-      async initLearning() {
+        /**
+         * Инициализирует обучение
+        */
+       async initLearning() {
         try {
-          ui.showLoadingState("Инициализация обучения...");
+            ui.showLoadingState("Инициализация обучения...");
+            
+            // Инициализируем карточки для текущего режима
+            await api.initializeLearning();
           
-          // Инициализируем карточки для текущего режима
-          await api.initializeLearning();
+            // Загружаем статистику
+            const stats = await api.loadLearningStats();
+            ui.updateStats(stats);
           
-          // Загружаем статистику
-          const stats = await api.loadLearningStats();
-          ui.updateStats(stats);
+            // Загружаем карточки для изучения
+            const cards = await api.loadDueCards();
+
+            // Скрываем индикатор загрузки
+            DOM.flashcardMessage.classList.add("hidden");
           
-          // Загружаем карточки для изучения
-          const cards = await api.loadDueCards();
+            // Показываем статистику
+            DOM.learningStats.classList.remove("hidden");
           
-          // Показываем статистику
-          DOM.learningStats.classList.remove("hidden");
-          
-          if (cards.length > 0) {
-            // Показываем первую карточку
-            ui.showCard(cards[0]);
-          } else {
-            ui.showCompletionMessage();
-          }
-        } catch (error) {
-          ui.showErrorMessage(error.message || "Произошла ошибка при инициализации обучения");
-        }
-      },
+            if (cards.length > 0) {
+                // Показываем первую карточку
+                ui.showCard(cards[0]);
+            } else {
+                ui.showCompletionMessage();
+            }
+            } catch (error) {
+            ui.showErrorMessage(error.message || "Произошла ошибка при инициализации обучения");
+            }
+        },
   
       /**
        * Обрабатывает нажатие на кнопку оценки

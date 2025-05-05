@@ -47,13 +47,27 @@
       
       <!-- Модуль карточки -->
       <div id="flashcardContainer" class="mb-8 flex flex-col items-center">
-        <div id="modeSelector" class="mb-6 w-full">
-          <label class="block text-gray-700 dark:text-gray-300 mb-2">Режим изучения:</label>
-          <select id="learningMode" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
+        <div id="modeSelector" class="mb-4 w-full">
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Режим изучения:</label>
+          <select id="learningMode" class="block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
             <option value="transcription_to_translation">Транскрипция → Перевод</option>
             <option value="translation_to_transcription">Перевод → Транскрипция</option>
             <option value="arabic_to_translation">Арабское написание → Перевод</option>
             <option value="translation_to_arabic">Перевод → Арабское написание</option>
+          </select>
+        </div>
+
+        <!-- Добавленный селектор количества карточек -->
+        <div class="mb-4 w-full">
+          <label for="cardsLimit" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Количество карточек для изучения:</label>
+          <select id="cardsLimit" class="block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+            <option value="30">30</option>
+            <option value="all">все</option>
           </select>
         </div>
 
@@ -77,7 +91,7 @@
 
         <!-- Начальное состояние -->
         <div id="startLearningPrompt" class="text-center p-6">
-          <p class="mb-4">Выберите режим изучения и нажмите кнопку ниже, чтобы начать.</p>
+          <p class="mb-4">Выберите режим изучения, количество карточек и нажмите кнопку ниже, чтобы начать.</p>
           <button id="initLearning" class="bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold py-3 px-8 rounded-lg transition-all">
             Начать изучение
           </button>
@@ -132,7 +146,6 @@
     </div>
   </div>
 
-
   <script src="./flashcards.js"></script>
   <script>
     // Код для переключения темы
@@ -160,7 +173,3 @@
   </script>
 </body>
 </html>
-
-
-      
-      
