@@ -388,7 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           
           // Активируем кнопки оценки снова, чтобы они были доступны для следующей карточки
-          ui.toggleRatingButtons(true);
+        //   ui.toggleRatingButtons(true);
         } catch (error) {
           ui.showErrorMessage(`Ошибка при сохранении оценки: ${error.message || "Неизвестная ошибка"}`);
           ui.toggleRatingButtons(true);
@@ -457,12 +457,16 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   
       // Обработка нажатия на кнопки оценки
-      document.querySelectorAll(".rating-btn").forEach(button => {
-        button.addEventListener("click", function() {
-          const quality = parseInt(this.dataset.quality);
-          controller.handleRating(quality);
+      // Обработка нажатия на кнопки оценки
+        document.querySelectorAll(".rating-btn").forEach(button => {
+            button.addEventListener(
+            "click",
+            function (e) {
+                const quality = +e.currentTarget.dataset.quality;
+                ui.toggleRatingButtons(false);      // ← сразу блокируем
+                controller.handleRating(quality);   // асинхронная логика
+            });
         });
-      });
   
       // Следующая карточка
       DOM.nextCardBtn.addEventListener("click", controller.showNextCard);
