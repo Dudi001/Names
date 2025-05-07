@@ -48,7 +48,7 @@
       <!-- Модуль карточки -->
       <div id="flashcardContainer" class="mb-8 flex flex-col items-center">
         <div id="modeSelector" class="mb-4 w-full">
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Режим изучения:</label>
+          <label id="learningModeTitle" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Режим изучения:</label>
           <select id="learningMode" class="block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
             <option value="transcription_to_translation">Транскрипция → Перевод</option>
             <option value="translation_to_transcription">Перевод → Транскрипция</option>
@@ -59,7 +59,7 @@
 
         <!-- Добавленный селектор количества карточек -->
         <div class="mb-4 w-full">
-          <label for="cardsLimit" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Количество карточек для изучения:</label>
+          <label id="cardsLimitTitle" for="cardsLimit" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Количество карточек для изучения:</label>
           <select id="cardsLimit" class="block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500">
             <option value="5">5</option>
             <option value="10">10</option>
@@ -75,7 +75,7 @@
         <div id="learningStats" class="w-full mb-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg hidden">
           <div class="flex justify-between">
             <div>
-              <span class="font-semibold">Всего имён:</span>
+              <span class="font-semibold">Осталось имён:</span>
               <span id="statTotal">0</span>
             </div>
             <div>

@@ -122,9 +122,9 @@
     will-change: transform;
   }
   
-  
+  /* Выделение карточки */
   .card-tilt:hover {
-    transform: rotateX(8deg) rotateY(8deg) scale(1.02);
+    transform: rotateX(8deg) rotateY(8deg) scale(1.50);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
   }
 

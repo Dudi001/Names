@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const initElements = () => {
       const elements = {
         learningModeSelect: document.getElementById("learningMode"),
+        learningModeTitle: document.getElementById("learningModeTitle"),
+        cardsLimitSelect: document.getElementById("cardsLimit"),
+        cardsLimitTitle: document.getElementById("cardsLimitTitle"),
         flashcard: document.getElementById("flashcard"),
         showAnswerBtn: document.getElementById("showAnswer"),
         startLearningPrompt: document.getElementById("startLearningPrompt"),
@@ -23,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cardBackType: document.getElementById("cardBackType"),
         cardBackContent: document.getElementById("cardBackContent"),
         cardInner: document.querySelector(".card-inner"),
-        cardsLimitSelect: document.getElementById("cardsLimit")
+        
       };
   
       // Проверка наличия всех необходимых элементов
@@ -103,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
        * Загружает статистику изучения для текущего пользователя
        */
       async loadLearningStats() {
-        console.log(`Вот значение селектора: -- ${DOM.cardsLimitSelect.value}`)
         return api.request(`${API_BASE_URL}/flashcards/stats?user_id=${state.userID}&mode=${state.currentMode}`);
       },
   
@@ -275,9 +277,9 @@ document.addEventListener('DOMContentLoaded', () => {
        * @param {Object} stats - Объект со статистикой
        */
       updateStats(stats) {
-        DOM.statTotal.textContent = stats.total || 0;
+        DOM.statTotal.textContent = stats.due_today || 0;
         DOM.statLearned.textContent = stats.learned || 0;
-        DOM.statDueToday.textContent = stats.due_today || 0;
+        DOM.statDueToday.textContent = DOM.cardsLimitSelect.value || 0;
       },
   
       /**
@@ -339,6 +341,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Скрываем индикатор загрузки
             DOM.flashcardMessage.classList.add("hidden");
+
+            // Скрываем селекторы
+            DOM.cardsLimitSelect.classList.add("hidden");
+            DOM.learningModeSelect.classList.add("hidden");
+            DOM.learningModeTitle.classList.add("hidden");
+            DOM.cardsLimitTitle.classList.add("hidden");
           
             // Показываем статистику
             DOM.learningStats.classList.remove("hidden");
@@ -369,15 +377,22 @@ document.addEventListener('DOMContentLoaded', () => {
           // Обновляем локальную статистику после успешной оценки
           // Увеличиваем число изученных карточек, если карточка считается изученной
           // (обычно при оценке 3 и выше карточка считается изученной)
-          if (quality >= 3) {
-            const learnedCount = parseInt(DOM.statLearned.textContent) || 0;
-            DOM.statLearned.textContent = learnedCount + 1;
-          }
+        //   if (quality >= 3) {
+        //     const learnedCount = parseInt(DOM.statLearned.textContent) || 0;
+        //     DOM.statLearned.textContent = learnedCount + 1;
+        //   }
           
-          // Уменьшаем счетчик карточек на сегодня
-          const dueToday = parseInt(DOM.statDueToday.textContent) || 0;
+          // Уменьшаем счетчик общего колличества карточек
+          const dueToday = parseInt(DOM.statDueToday.textContent)
           if (dueToday > 0) {
             DOM.statDueToday.textContent = dueToday - 1;
+          }
+          
+
+          // Уменьшаем счетчик карточек  на сегодня
+          const dueTotal = parseInt(DOM.statTotal.textContent) || 0;
+          if (dueTotal > 0) {
+            DOM.statTotal.textContent = dueTotal - 1;
           }
           
           // Показываем кнопку "Следующая карточка"
