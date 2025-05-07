@@ -22,7 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
         cardFrontContent: document.getElementById("cardFrontContent"),
         cardBackType: document.getElementById("cardBackType"),
         cardBackContent: document.getElementById("cardBackContent"),
-        cardInner: document.querySelector(".card-inner")
+        cardInner: document.querySelector(".card-inner"),
+        cardsLimitSelect: document.getElementById("cardsLimit")
       };
   
       // Проверка наличия всех необходимых элементов
@@ -102,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
        * Загружает статистику изучения для текущего пользователя
        */
       async loadLearningStats() {
+        console.log(`Вот значение селектора: -- ${DOM.cardsLimitSelect.value}`)
         return api.request(`${API_BASE_URL}/flashcards/stats?user_id=${state.userID}&mode=${state.currentMode}`);
       },
   
@@ -109,7 +111,10 @@ document.addEventListener('DOMContentLoaded', () => {
        * Загружает карточки для изучения на сегодня
        */
       async loadDueCards() {
-        const cards = await api.request(`${API_BASE_URL}/flashcards/due?user_id=${state.userID}&mode=${state.currentMode}&limit=5`);
+        const cards = await api.request(
+            `${API_BASE_URL}/flashcards/due?user_id=${state.userID}&mode=${state.currentMode}&limit=${DOM.cardsLimitSelect.value}`
+        );
+        console.log(`Вот значение селектора: -- ${DOM.cardsLimitSelect.value}`)
         state.currentCards = cards;
         state.currentCardIndex = 0;
         return cards;

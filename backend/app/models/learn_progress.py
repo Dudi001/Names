@@ -40,4 +40,3 @@ class LearningProgress(Base):
 
     def __repr__(self):
         return f"<LearningProgress(user_id={self.user_id}, name_id={self.name_id}, mode={self.mode})>"
-    
