@@ -1,3 +1,4 @@
+// main.js
 console.log("main.js загружен!");
 const namesContainer = document.getElementById("names");
 const searchInput = document.getElementById("search");
@@ -106,12 +107,9 @@ function renderNames(filter = "") {
         card.className =
             "flex flex-col justify-between h-full p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow hover:shadow-md transition text-center card-tilt";
 
-        card.className =
-            "flex flex-col justify-between h-full p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow hover:shadow-md transition text-center";
-
         card.innerHTML = `
             <div class="flex flex-col flex-grow mb-4">
-                <div class="text-3xl font-bold text-gray-900 dark:text-white mb-2">${name.arabic}</div>
+                <div class="text-3xl font-bold text-black dark:text-white mb-2">${name.arabic}</div>
                 <div class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-1">${name.transliteration}</div>
                 <div class="text-gray-600 dark:text-gray-400">${name.translation}</div>
             </div>

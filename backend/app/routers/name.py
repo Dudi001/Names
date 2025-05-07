@@ -9,11 +9,13 @@ from app.schema.name import NameTestSchema
 from typing import Any, Sequence
 from fastapi.encoders import jsonable_encoder
 
+
 worker = APIRouter()
 
 
 @worker.get("/names", response_model=list[NameTestSchema])
 async def get_users(db: AsyncSession = Depends(get_db)):
+    """Возвращает список имен Всевышнего для отображения на странице"""
     result = await db.execute(select(Name))
     rows: Sequence[Row[tuple]] = result.all()
     result: list[dict[str, Any]] = [row._asdict() for row in rows]

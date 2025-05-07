@@ -20,10 +20,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="font-sans transition-colors duration-300 bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+<body class="font-sans transition-colors duration-300 bg-amber-50 dark:bg-gray-700 text-gray-900 dark:text-white">
 
   <div class="max-w-7xl mx-auto p-6">
-    <div class="flex justify-end items-center mb-6">
+    <div class="flex justify-between items-center mb-6">
+      <!-- Кнопка для начала обучения -->
+      <a href="learn.html" class="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-bold py-2 px-6 rounded-md transition-all">
+        Изучать имена
+      </a>
+      
       <!-- Тема -->
       <div class="flex items-center">
         <span class="mr-2 dark:text-gray-300">Тема:</span>
@@ -39,7 +44,8 @@
       <div class="lg:col-span-8 lg:col-start-3">
         <!-- Заголовок и поиск по центру -->
         <div class="text-center mb-8" id="searchContainer">
-          <h1 class="text-4xl font-bold mb-6">99 имён Аллаха</h1>
+          <h1 class="text-4xl font-bold mb-3">99 имён Аллаха</h1>
+          <h3 class="text-lg italic font-normal mt-3 mb-3"> Посланник Аллаха (ﷺ) сказал: «Поистине, у Аллаха есть девяносто девять имён — сотня без одного, и тот, кто будет перечислять их (запомнит их), войдёт в рай».</h3>
           <div class="max-w-xl mx-auto">
             <input
               type="text"
