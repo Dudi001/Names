@@ -374,14 +374,6 @@ document.addEventListener('DOMContentLoaded', () => {
           // Сохраняем результат оценки на сервере
           const result = await api.reviewCard(state.currentCards[state.currentCardIndex].id, quality);
           
-          // Обновляем локальную статистику после успешной оценки
-          // Увеличиваем число изученных карточек, если карточка считается изученной
-          // (обычно при оценке 3 и выше карточка считается изученной)
-        //   if (quality >= 3) {
-        //     const learnedCount = parseInt(DOM.statLearned.textContent) || 0;
-        //     DOM.statLearned.textContent = learnedCount + 1;
-        //   }
-          
           // Уменьшаем счетчик общего колличества карточек
           const dueToday = parseInt(DOM.statDueToday.textContent)
           if (dueToday > 0) {
@@ -477,7 +469,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   
       // Обработка нажатия на кнопки оценки
-      // Обработка нажатия на кнопки оценки
         document.querySelectorAll(".rating-btn").forEach(button => {
             button.addEventListener(
             "click",
@@ -485,6 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const quality = +e.currentTarget.dataset.quality;
                 ui.toggleRatingButtons(false);      // ← сразу блокируем
                 controller.handleRating(quality);   // асинхронная логика
+                DOM.ratingContainer.classList.add("hidden") // Скрываем кнопки оценки
             });
         });
   

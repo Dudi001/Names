@@ -22,15 +22,15 @@
 </head>
 <body class="font-sans transition-colors duration-300 bg-amber-50 dark:bg-gray-700 text-gray-900 dark:text-white">
 
-  <div class="max-w-7xl mx-auto p-6">
-    <div class="flex justify-between items-center mb-6">
+  <div class="max-w-7xl mx-auto px-4 py-6 sm:px-6">
+    <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
       <!-- Кнопка для начала обучения -->
-      <a href="learn.html" class="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-bold py-2 px-6 rounded-md transition-all">
+      <a href="learn.html" class="w-full sm:w-auto bg-fuchsia-700 hover:bg-fuchsia-800 text-white dark:bg-blue-500 dark:hover:bg-blue-400 dark:text-white font-bold py-2 px-6 rounded-md transition-all flex items-center justify-center">
         Изучать имена
       </a>
       
       <!-- Тема -->
-      <div class="flex items-center">
+      <div class="flex items-center mt-4 sm:mt-0">
         <span class="mr-2 dark:text-gray-300">Тема:</span>
         <label class="theme-switch">
           <input type="checkbox" id="themeToggle">
@@ -39,28 +39,26 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-      <!-- Центральная часть с именами -->
-      <div class="lg:col-span-8 lg:col-start-3">
-        <!-- Заголовок и поиск по центру -->
-        <div class="text-center mb-8" id="searchContainer">
-          <h1 class="text-4xl font-bold mb-3">99 имён Аллаха</h1>
-          <h3 class="text-lg italic font-normal mt-3 mb-3"> Посланник Аллаха (ﷺ) сказал: «Поистине, у Аллаха есть девяносто девять имён — сотня без одного, и тот, кто будет перечислять их (запомнит их), войдёт в рай».</h3>
-          <div class="max-w-xl mx-auto">
-            <input
-              type="text"
-              id="search"
-              placeholder="Найти имя…"
-              class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-            />
-          </div>
+    <!-- Центральная часть с именами - FIXED LAYOUT -->
+    <div class="max-w-3xl mx-auto w-full">
+      <!-- Заголовок и поиск по центру -->
+      <div class="text-center mb-8" id="searchContainer">
+        <h1 class="text-3xl sm:text-4xl font-bold mb-3">99 имён Аллаха</h1>
+        <h3 class="text-base sm:text-lg italic font-normal mt-3 mb-3 px-2"> Посланник Аллаха (ﷺ) сказал: «Поистине, у Аллаха есть девяносто девять имён — сотня без одного, и тот, кто будет перечислять их (запомнит их), войдёт в рай».</h3>
+        <div class="max-w-xl mx-auto px-2">
+          <input
+            type="text"
+            id="search"
+            placeholder="Найти имя…"
+            class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+          />
         </div>
-        
-        <!-- Сетка с именами -->
-        <div id="names" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-          <div class="loading col-span-full">
-            <div class="loading-spinner"></div>
-          </div>
+      </div>
+      
+      <!-- Сетка с именами -->
+      <div id="names" class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+        <div class="loading col-span-full text-center py-8">
+          <div class="loading-spinner mx-auto"></div>
         </div>
       </div>
     </div>
@@ -68,14 +66,14 @@
 
   <!-- Модальное окно для деталей (на мобильных) -->
   <div id="detailsModal" class="modal">
-    <div class="modal-content bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+    <div class="modal-content bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-lg shadow-lg w-[90%] sm:w-auto">
       <div class="flex justify-between items-center mb-4">
-        <h2 id="modalArabic" class="text-3xl font-bold"></h2>
+        <h2 id="modalArabic" class="text-2xl sm:text-3xl font-bold break-words"></h2>
         <button id="closeModal" class="w-8 h-8 flex items-center justify-center bg-gray-200 dark:bg-gray-700 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
           ✕
         </button>
       </div>
-      <h3 id="modalTransliteration" class="text-xl font-semibold"></h3>
+      <h3 id="modalTransliteration" class="text-lg sm:text-xl font-semibold"></h3>
       <p id="modalTranslation" class="text-md text-gray-600 dark:text-gray-300 mb-4"></p>
       <p id="modalTafsir" class="text-md whitespace-pre-line leading-relaxed"></p>
     </div>

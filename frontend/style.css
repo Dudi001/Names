@@ -27,7 +27,9 @@
   .slider:before {
     position: absolute;
     content: "🌙";
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 22px;
     width: 22px;
     left: 4px;
@@ -38,8 +40,7 @@
     font-size: 14px;
     text-align: center;
     line-height: 22px;
-}
-
+  }
   
   input:checked + .slider {
     background-color: #2196F3;
@@ -48,8 +49,8 @@
   input:checked + .slider:before {
     transform: translateX(30px);
     content: "☀️";
-}
-
+  }
+  
   /* Обновленные стили модального окна */
   .modal {
     position: fixed;
@@ -65,7 +66,7 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease;
-    padding: 20px;
+    padding: 15px;
     box-sizing: border-box;
   }
   
@@ -77,7 +78,7 @@
   .dark .modal-content {
     background-color: #1f2937;
   }
-
+  
   .modal-content {
     background: white;
     border-radius: 12px;
@@ -96,11 +97,11 @@
     transform: translateY(0) scale(1);
     opacity: 1;
   }
-
+  
   .card {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* или без него */
+    justify-content: space-between;
     height: 100%;
     padding: 1rem;
     border: 1px solid #ddd;
@@ -123,13 +124,15 @@
   }
   
   /* Выделение карточки */
-  .card-tilt:hover {
-    transform: rotateX(8deg) rotateY(8deg) scale(1.50);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  @media (hover: hover) {
+    .card-tilt:hover {
+      transform: rotateX(8deg) rotateY(8deg) scale(1.02);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
   }
-
-/* Стили для flashcards */
-.perspective-1000 {
+  
+  /* Стили для flashcards */
+  .perspective-1000 {
     perspective: 1000px;
   }
   
@@ -153,8 +156,10 @@
     transition: all 0.2s ease;
   }
   
-  .rating-btn:hover {
-    transform: translateY(-2px);
+  @media (hover: hover) {
+    .rating-btn:hover {
+      transform: translateY(-2px);
+    }
   }
   
   .flashcard-success {
@@ -197,28 +202,28 @@
     border: 1px solid rgba(239, 68, 68, 0.4);
     color: #f87171;
   }
-
-/* Стили для сообщений */
-.flashcard-success {
+  
+  /* Стили для сообщений */
+  .flashcard-success {
     background-color: #d1fae5;
     color: #065f46;
     border-left: 4px solid #10b981;
-}
-
-.flashcard-warning {
+  }
+  
+  .flashcard-warning {
     background-color: #fef3c7;
     color: #92400e;
     border-left: 4px solid #f59e0b;
-}
-
-.flashcard-error {
+  }
+  
+  .flashcard-error {
     background-color: #fee2e2;
     color: #b91c1c;
     border-left: 4px solid #ef4444;
-}
-
-/* Стили для загрузки */
-.loading-spinner {
+  }
+  
+  /* Стили для загрузки */
+  .loading-spinner {
     display: inline-block;
     width: 40px;
     height: 40px;
@@ -226,37 +231,37 @@
     border-radius: 50%;
     border-top-color: #3b82f6;
     animation: spin 1s ease-in-out infinite;
-}
-
-@keyframes spin {
+  }
+  
+  @keyframes spin {
     to { transform: rotate(360deg); }
-}
-
-@keyframes modalFadeIn {
+  }
+  
+  @keyframes modalFadeIn {
     from { transform: translateY(20px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
-}
-
-input:checked + .slider {
+  }
+  
+  input:checked + .slider {
     background-color: #3b82f6;
-}
-
-/* Основные стили для карточек */
-.card-inner {
+  }
+  
+  /* Основные стили для карточек */
+  .card-inner {
     transition: transform 0.6s;
     transform-style: preserve-3d;
-}
-
-.card-front,
-.card-back {
+  }
+  
+  .card-front,
+  .card-back {
     backface-visibility: hidden;
-}
-
-.card-back {
+  }
+  
+  .card-back {
     transform: rotateY(180deg);
-}
-
-.perspective-1000 {
+  }
+  
+  .perspective-1000 {
     perspective: 1000px;
   }
   
@@ -286,16 +291,80 @@ input:checked + .slider {
   
   .dark .loading-spinner {
     border-color: rgba(255, 255, 255, 0.1);
-    border-left-color: #3b82f6;
+    border-top-color: #3b82f6;
   }
   
-  /* Стили для селектора количества карточек */
-  #cardsLimit {
-    transition: all 0.3s ease;
+  /* Стили для селекторов */
+  #learningMode, #cardsLimit {
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 2rem;
   }
   
-  #cardsLimit:focus {
+  #learningMode:focus, #cardsLimit:focus {
     border-color: #3b82f6;
     outline: 2px solid rgba(59, 130, 246, 0.5);
     outline-offset: 1px;
+  }
+  
+  /* Стили для мобильных устройств */
+  @media (max-width: 640px) {
+    .slider:before {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal-content {
+      padding: 15px;
+      width: 95%;
+      max-height: 85vh;
+    }
+    
+    #flashcardControls {
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    #flashcardControls button {
+      width: 100%;
+    }
+    
+    #learningStats {
+      text-align: center;
+    }
+    
+    .card-inner {
+      height: 160px;
+    }
+    
+    .card-front, .card-back {
+      padding: 12px;
+    }
+    
+    .card-front p, .card-back p {
+      font-size: 18px;
+    }
+    
+    /* Для самых маленьких устройств */
+    @media (max-width: 360px) {
+      .rating-btn {
+        font-size: 12px;
+        padding: 8px 4px;
+      }
+    }
+  }
+  
+  /* Добавляем брейкпоинт для очень маленьких устройств */
+  @media (min-width: 400px) {
+    .xs\:grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  
+  /* Исправляем темный режим для кнопок */
+  .dark .bg-blue-500.dark\:hover\:bg-blue-400:hover {
+    background-color: #60a5fa !important;
   }

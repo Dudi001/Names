@@ -20,12 +20,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="font-sans transition-colors duration-300 bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+<body class="font-sans transition-colors duration-300 bg-amber-50 dark:bg-gray-700 text-gray-900 dark:text-white">
 
-  <div class="max-w-3xl mx-auto p-6">
-    <div class="flex justify-between items-center mb-6">
+  <div class="max-w-3xl mx-auto px-4 py-6 sm:px-6">
+    <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
       <!-- Кнопка для возврата к списку -->
-      <a href="index.html" class="flex items-center bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-white font-bold py-2 px-4 rounded-md transition-all">
+      <a href="index.html" class="w-full sm:w-auto bg-fuchsia-700 hover:bg-fuchsia-800 text-white dark:bg-blue-500 dark:hover:bg-blue-400 dark:text-white py-2 px-4 rounded-md transition-all flex items-center justify-center sm:justify-start">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
           <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
         </svg>
@@ -42,8 +42,8 @@
       </div>
     </div>
 
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
-      <h1 class="text-2xl font-bold text-center mb-6">Изучение имён Аллаха</h1>
+    <div class="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-lg shadow-lg">
+      <h1 class="text-xl sm:text-2xl font-bold text-center mb-6">Изучение имён Аллаха</h1>
       
       <!-- Модуль карточки -->
       <div id="flashcardContainer" class="mb-8 flex flex-col items-center">
@@ -72,17 +72,17 @@
         </div>
 
         <!-- Статистика -->
-        <div id="learningStats" class="w-full mb-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg hidden">
-          <div class="flex justify-between">
-            <div>
+        <div id="learningStats" class="w-full mb-6 p-3 sm:p-4 bg-gray-100 dark:bg-gray-700 rounded-lg hidden">
+          <div class="flex flex-col sm:flex-row sm:justify-between gap-2">
+            <div class="text-center sm:text-left">
               <span class="font-semibold">Осталось имён:</span>
               <span id="statTotal">0</span>
             </div>
-            <div>
+            <div class="text-center">
               <span class="font-semibold">Изучено:</span>
               <span id="statLearned">0</span>
             </div>
-            <div>
+            <div class="text-center sm:text-right">
               <span class="font-semibold">На сегодня:</span>
               <span id="statDueToday">0</span>
             </div>
@@ -90,30 +90,30 @@
         </div>
 
         <!-- Начальное состояние -->
-        <div id="startLearningPrompt" class="text-center p-6">
+        <div id="startLearningPrompt" class="text-center p-4 sm:p-6">
           <p class="mb-4">Выберите режим изучения, количество карточек и нажмите кнопку ниже, чтобы начать.</p>
-          <button id="initLearning" class="bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold py-3 px-8 rounded-lg transition-all">
+          <button id="initLearning" class="bg-violet-500 hover:bg-violet-400 text-white font-bold py-3 px-6 rounded-lg transition-all">
             Начать изучение
           </button>
         </div>
 
         <!-- Карточка для изучения -->
         <div id="flashcard" class="hidden w-full perspective-1000 mb-6">
-          <div class="card-inner w-full h-64 relative transition-transform duration-700 transform-style-preserve-3d">
-            <div class="card-front absolute w-full h-full flex items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 backface-hidden">
+          <div class="card-inner w-full h-48 sm:h-64 relative transition-transform duration-700 transform-style-preserve-3d">
+            <div class="card-front absolute w-full h-full flex items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 sm:p-6 backface-hidden">
               <div class="text-center">
                 <h3 id="cardFrontType" class="text-sm text-gray-500 dark:text-gray-400 mb-2">Транскрипция</h3>
-                <p id="cardFrontContent" class="text-3xl font-bold"></p>
+                <p id="cardFrontContent" class="text-2xl sm:text-3xl font-bold break-words"></p>
               </div>
             </div>
-            <div class="card-back absolute w-full h-full flex items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 backface-hidden rotate-y-180">
+            <div class="card-back absolute w-full h-full flex items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 sm:p-6 backface-hidden rotate-y-180">
               <div class="text-center">
                 <h3 id="cardBackType" class="text-sm text-gray-500 dark:text-gray-400 mb-2">Перевод</h3>
-                <p id="cardBackContent" class="text-3xl font-bold"></p>
+                <p id="cardBackContent" class="text-2xl sm:text-3xl font-bold break-words"></p>
               </div>
             </div>
           </div>
-          <button id="showAnswer" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg transition-all mt-4">
+          <button id="showAnswer" class="w-full bg-violet-500 hover:bg-violet-400 text-white font-bold py-3 px-4 rounded-lg transition-all mt-4">
             Показать ответ
           </button>
         </div>
@@ -122,25 +122,25 @@
         <div id="ratingContainer" class="hidden w-full">
           <p class="text-center mb-4">Насколько хорошо вы знали ответ?</p>
           <div class="grid grid-cols-3 gap-2 mb-4">
-            <button data-quality="0" class="rating-btn bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg">Не знал</button>
-            <button data-quality="3" class="rating-btn bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-lg">С трудом</button>
-            <button data-quality="5" class="rating-btn bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg">Знал</button>
+            <button data-quality="0" class="rating-btn bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg text-sm sm:text-base">Не знал</button>
+            <button data-quality="3" class="rating-btn bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-lg text-sm sm:text-base">С трудом</button>
+            <button data-quality="5" class="rating-btn bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg text-sm sm:text-base">Знал</button>
           </div>
         </div>
 
         <!-- Сообщения -->
-        <div id="flashcardMessage" class="hidden w-full p-4 rounded-lg mb-6">
+        <div id="flashcardMessage" class="hidden w-full p-3 sm:p-4 rounded-lg mb-6">
           <p id="flashcardMessageText" class="text-center"></p>
         </div>
 
         <!-- Кнопки управления -->
-        <div id="flashcardControls" class="hidden w-full flex justify-between">
-          <button id="finishLearning" class="bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white font-bold py-2 px-6 rounded-lg transition-all">
-            Завершить
-          </button>
-          <button id="nextCard" class="hidden bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition-all">
-            Следующая карточка
-          </button>
+        <div id="flashcardControls" class="hidden w-full flex flex-col-reverse sm:flex-row justify-between gap-3">
+            <button id="finishLearning" class="bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white font-bold py-2 px-6 rounded-lg transition-all order-2 sm:order-1">
+              Завершить
+            </button>
+            <button id="nextCard" class="hidden bg-violet-500 hover:bg-violet-400 text-white font-bold py-2 px-6 rounded-lg transition-all order-1 sm:order-2">
+              Следующая карточка
+            </button>
         </div>
       </div>
     </div>
