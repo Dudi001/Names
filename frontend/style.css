@@ -124,7 +124,7 @@
   
   /* Выделение карточки */
   .card-tilt:hover {
-    transform: rotateX(8deg) rotateY(8deg) scale(1.50);
+    transform: rotateX(8deg) rotateY(8deg) scale(1.02);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
   }
 
@@ -290,10 +290,34 @@ input:checked + .slider {
   }
   
   /* Стили для селектора количества карточек */
-  #cardsLimit {
+  /* #cardsLimit {
     transition: all 0.3s ease;
+    appearance: none;
+  } */
+
+  #learningMode {
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 2rem;
   }
-  
+
+  #learningMode:focus {
+    border-color: #3b82f6;
+    outline: 2px solid rgba(59, 130, 246, 0.5);
+    outline-offset: 1px;
+  }
+
+  #cardsLimit {
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 2rem;
+  }
+
+
   #cardsLimit:focus {
     border-color: #3b82f6;
     outline: 2px solid rgba(59, 130, 246, 0.5);

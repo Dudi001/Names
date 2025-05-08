@@ -114,7 +114,7 @@ function renderNames(filter = "") {
                 <div class="text-gray-600 dark:text-gray-400">${name.translation}</div>
             </div>
             <div class="mt-auto">
-                <button class="w-full bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-bold py-2 px-4 rounded-md transition-all">
+                <button class="w-full bg-violet-500 hover:bg-violet-400 text-white font-bold py-2 px-4 rounded-md transition-all">
                     Подробнее
                 </button>
             </div>
