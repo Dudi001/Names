@@ -477,7 +477,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   
       // Обработка нажатия на кнопки оценки
-      // Обработка нажатия на кнопки оценки
         document.querySelectorAll(".rating-btn").forEach(button => {
             button.addEventListener(
             "click",
@@ -485,6 +484,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const quality = +e.currentTarget.dataset.quality;
                 ui.toggleRatingButtons(false);      // ← сразу блокируем
                 controller.handleRating(quality);   // асинхронная логика
+                DOM.ratingContainer.classList.add("hidden") // Скрываем кнопки оценки
             });
         });
   
