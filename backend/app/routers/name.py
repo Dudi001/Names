@@ -5,7 +5,7 @@ from sqlalchemy import select, Row
 from app.config.database import get_db
 from app.config.responses import create_http_response, Http200
 from app.models.name import Name
-from app.schema.name import NameTestSchema
+from backend.app.schema.name.name import NameTestSchema
 from typing import Any, Sequence
 from fastapi.encoders import jsonable_encoder
 
