@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
       currentMode: "transcription_to_translation",
       currentCards: [],
       currentCardIndex: 0,
-      userID: 1 // В идеале это должно приходить из системы авторизации
+      userID: 3 // В идеале это должно приходить из системы авторизации
     };
   
     // Базовый URL API

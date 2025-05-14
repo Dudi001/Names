@@ -4,9 +4,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, Row
 from app.config.database import get_db
 from app.config.responses import create_http_response, Http200
-from backend.app.packages.card.card import FlashcardManager
+from app.packages.card.card import FlashcardManager
 from app.models.name import Name
-from backend.app.schema.card.cards import (InitializeLearningRequest, ReviewCardRequest)
+from app.schema.cards import (InitializeLearningRequest, ReviewCardRequest)
 from typing import Any, Sequence, Optional
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse

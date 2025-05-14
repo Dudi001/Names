@@ -29,8 +29,8 @@ class LearningProgress(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.user_id"), nullable=False)
     mode: Mapped[str] = mapped_column(String(30), nullable=False)
     easiness: Mapped[float] = mapped_column(Float(), nullable=False, default=2.5)
-    interval: Mapped[int] = mapped_column(SmallInteger(), default=1)  # SmallInteger достаточно
-    repetitions: Mapped[int] = mapped_column(SmallInteger(), default=0)  # SmallInteger достаточно
+    interval: Mapped[int] = mapped_column(SmallInteger(), default=1)
+    repetitions: Mapped[int] = mapped_column(SmallInteger(), default=0)
     last_reviewed: Mapped[date | None] = mapped_column(Date())
     due_date: Mapped[date] = mapped_column(Date(), nullable=False)
 
