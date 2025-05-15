@@ -5,7 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .base import Base
 
 
-class User(Base):
+class UserModel(Base):
     """Таблица name_ru.users"""
 
     __tablename__ = "users"

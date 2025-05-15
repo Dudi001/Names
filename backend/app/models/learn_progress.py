@@ -36,7 +36,7 @@ class LearningProgress(Base):
 
     # Опциональные отношения (если нужны)
     name: Mapped["Name"] = relationship(back_populates="progress_records")
-    user: Mapped["User"] = relationship(back_populates="learning_progress")
+    user: Mapped["UserModel"] = relationship(back_populates="learning_progress")
 
     def __repr__(self):
         return f"<LearningProgress(user_id={self.user_id}, name_id={self.name_id}, mode={self.mode})>"

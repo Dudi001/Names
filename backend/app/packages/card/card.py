@@ -5,11 +5,12 @@ from sqlalchemy import select, update, func, case, and_
 from sqlalchemy.dialects.postgresql import insert
 from app.models.name import Name
 from app.models.learn_progress import LearningProgress
-from app.models.user import User
+from app.models.user import UserModel
 from typing import List, Dict, Optional
 
 
 class FlashcardManager:
+    """Класс для работы с методами интервального повторения"""
     def __init__(self, db: AsyncSession):
         """Инициализация менеджера карточек с подключением к БД"""
         self.db = db
@@ -226,7 +227,7 @@ class FlashcardManager:
         """
         Возвращает статистику пользователя
         """
-        stmt = select(User).where(User.user_id == user_id)
+        stmt = select(UserModel).where(UserModel.user_id == user_id)
         result = await self.db.execute(stmt)
         user = result.scalar_one_or_none()
 
