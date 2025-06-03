@@ -1,15 +1,10 @@
-# backend/app/routers/name.py
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, Row
 from app.config.database import get_db
-from app.config.responses import create_http_response, Http200
-from app.packages.card import FlashcardManager
-from app.models.name import Name
+from app.packages.card.card import FlashcardManager
 from app.schema.cards import (InitializeLearningRequest, ReviewCardRequest)
-from typing import Any, Sequence, Optional
+from typing import Optional
 from fastapi.encoders import jsonable_encoder
-from fastapi.responses import JSONResponse
 
 
 worker = APIRouter()
@@ -25,8 +20,10 @@ async def initialize_learning(
     """
     try:
         manager = FlashcardManager(db)
-        await manager.initialize_learning_for_user(request.user_id, request.mode)
-        print("Initialization successful")
+        await manager.initialize_learning_for_user(
+            request.user_id,
+            request.mode
+        )
         return {"status": "success", "message": "Learning initialized"}
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -64,7 +61,12 @@ async def review_card(
     """
     try:
         manager = FlashcardManager(db)
-        await manager.review_card(request.user_id, request.name_id, request.mode, request.quality)
+        await manager.review_card(
+            request.user_id,
+            request.name_id,
+            request.mode,
+            request.quality
+        )
         return {"status": "success", "message": "Review saved"}
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))

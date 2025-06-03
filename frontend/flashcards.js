@@ -1,6 +1,4 @@
-// flashcards.js - Модуль для работы с карточками интервального повторения
 document.addEventListener('DOMContentLoaded', () => {
-    // Инициализация DOM элементов (с проверкой их существования)
     const initElements = () => {
       const elements = {
         learningModeSelect: document.getElementById("learningMode"),
@@ -29,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
       };
   
-      // Проверка наличия всех необходимых элементов
       const missingElements = Object.entries(elements)
         .filter(([key, element]) => !element)
         .map(([key]) => key);
@@ -42,22 +39,18 @@ document.addEventListener('DOMContentLoaded', () => {
       return elements;
     };
   
-    // Получаем все DOM элементы
     const DOM = initElements();
-    if (!DOM) return; // Прекращаем выполнение, если не все элементы найдены
+    if (!DOM) return;
   
-    // Состояние приложения
     const state = {
       currentMode: "transcription_to_translation",
       currentCards: [],
       currentCardIndex: 0,
-      userID: 1 // В идеале это должно приходить из системы авторизации
+      userID: 3 // TODO: брать id из авторизации
     };
   
-    // Базовый URL API
     const API_BASE_URL = '/api/v1';
   
-    // Объект для группировки API-вызовов
     const api = {
       /**
        * Выполняет запрос к API с обработкой ошибок
@@ -221,7 +214,6 @@ document.addEventListener('DOMContentLoaded', () => {
         DOM.flashcardControls.classList.remove("hidden");
         DOM.nextCardBtn.classList.add("hidden");
         
-        // Убедимся, что кнопки оценки активны для следующей карточки
         this.toggleRatingButtons(true);
         
         // Заполняем содержимое карточки в зависимости от режима
@@ -263,8 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
         this.showSuccessMessage("Поздравляем! Вы завершили изучение на сегодня.");
         DOM.flashcardControls.classList.remove("hidden");
         
-        // После завершения обучения, обновим статистику еще раз
-        // чтобы убедиться, что все данные актуальны
+        // После завершения обучения, обновим статистику
         api.loadLearningStats()
           .then(stats => this.updateStats(stats))
           .catch(error => {
@@ -329,30 +320,23 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             ui.showLoadingState("Инициализация обучения...");
             
-            // Инициализируем карточки для текущего режима
             await api.initializeLearning();
           
-            // Загружаем статистику
             const stats = await api.loadLearningStats();
             ui.updateStats(stats);
           
-            // Загружаем карточки для изучения
             const cards = await api.loadDueCards();
 
-            // Скрываем индикатор загрузки
             DOM.flashcardMessage.classList.add("hidden");
 
-            // Скрываем селекторы
             DOM.cardsLimitSelect.classList.add("hidden");
             DOM.learningModeSelect.classList.add("hidden");
             DOM.learningModeTitle.classList.add("hidden");
             DOM.cardsLimitTitle.classList.add("hidden");
           
-            // Показываем статистику
             DOM.learningStats.classList.remove("hidden");
           
             if (cards.length > 0) {
-                // Показываем первую карточку
                 ui.showCard(cards[0]);
             } else {
                 ui.showCompletionMessage();
@@ -398,9 +382,7 @@ document.addEventListener('DOMContentLoaded', () => {
           } else {
             ui.showErrorMessage("Не беспокойтесь, вы повторите это имя снова.");
           }
-          
-          // Активируем кнопки оценки снова, чтобы они были доступны для следующей карточки
-        //   ui.toggleRatingButtons(true);
+
         } catch (error) {
           ui.showErrorMessage(`Ошибка при сохранении оценки: ${error.message || "Неизвестная ошибка"}`);
           ui.toggleRatingButtons(true);
@@ -414,17 +396,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Переходим к следующей карточке
         state.currentCardIndex++;
         
-        // Скрываем сообщение
         DOM.flashcardMessage.classList.add("hidden");
         
-        // Скрываем кнопку "Следующая карточка"
         DOM.nextCardBtn.classList.add("hidden");
         
-        // Сбрасываем состояние кнопок оценки (на всякий случай)
         ui.toggleRatingButtons(true);
         
         if (state.currentCardIndex < state.currentCards.length) {
-          // Показываем следующую карточку
           ui.showCard(state.currentCards[state.currentCardIndex]);
         } else {
           ui.showCompletionMessage();
@@ -442,7 +420,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // Инициализация обработчиков событий
     function initEventListeners() {
-      // Выбор режима обучения
       DOM.learningModeSelect.addEventListener("change", function() {
         state.currentMode = this.value;
       });
@@ -455,16 +432,12 @@ document.addEventListener('DOMContentLoaded', () => {
   
       // Показать/скрыть ответ
       DOM.showAnswerBtn.addEventListener("click", () => {
-        // Переворачиваем карточку
         DOM.cardInner.classList.add("flipped");
         
-        // Скрываем кнопку "Показать ответ"
         DOM.showAnswerBtn.classList.add("hidden");
         
-        // Показываем кнопки оценки
         DOM.ratingContainer.classList.remove("hidden");
         
-        // Показываем кнопки управления
         DOM.flashcardControls.classList.remove("hidden");
       });
   

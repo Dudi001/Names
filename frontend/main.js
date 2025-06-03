@@ -20,10 +20,8 @@ const modalTransliteration = document.getElementById("modalTransliteration");
 const modalTranslation = document.getElementById("modalTranslation");
 const modalTafsir = document.getElementById("modalTafsir");
 
-// Хранилище для загруженных имен
 let allNames = [];
 
-// Загрузка данных с бэкенда
 async function fetchNames() {
     try {
     const response = await fetch('/api/v1/names/names');
@@ -141,17 +139,14 @@ function renderNames(filter = "") {
 
 
 function showDetails(name) {
-    // Заполняем данные модального окна
     modalArabic.textContent = name.arabic;
     modalTransliteration.textContent = name.transliteration;
     modalTranslation.textContent = name.translation;
     modalTafsir.textContent = name.tafsir;
     
-    // Показываем модальное окно
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
     
-    // На десктопах также заполняем сайдбар
     if (window.innerWidth >= 1024) {
     sidebarArabic.textContent = name.arabic;
     sidebarTransliteration.textContent = name.transliteration;
@@ -161,7 +156,6 @@ function showDetails(name) {
     }
 }
 
-// Закрытие модального окна
 closeModalButton.addEventListener("click", closeModal);
 modal.addEventListener("click", function(e) {
     if (e.target === modal) {

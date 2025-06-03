@@ -1,7 +1,8 @@
 from pydantic import BaseModel
 
 
-class NameTestSchema(BaseModel):
+class Names(BaseModel):
+    """Поля для имен"""
     id: int
     name_ar: str
     transliteration: str

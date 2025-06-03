@@ -1,4 +1,3 @@
-# backend/app/config/responses.py
 from typing import Any
 from abc import abstractmethod, ABC
 from fastapi.responses import JSONResponse, PlainTextResponse
