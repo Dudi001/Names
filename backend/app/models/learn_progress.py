@@ -11,7 +11,6 @@ class LearningProgress(Base):
 
     __tablename__ = "learning_progress"
     __table_args__ = (
-        # Ограничение на допустимые значения mode
         CheckConstraint(
             """mode IN (
             'transcription_to_translation',
@@ -34,7 +33,6 @@ class LearningProgress(Base):
     last_reviewed: Mapped[date | None] = mapped_column(Date())
     due_date: Mapped[date] = mapped_column(Date(), nullable=False)
 
-    # Опциональные отношения (если нужны)
     name: Mapped["Name"] = relationship(back_populates="progress_records")
     user: Mapped["UserModel"] = relationship(back_populates="learning_progress")
 

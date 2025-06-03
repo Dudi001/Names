@@ -12,7 +12,10 @@ class UserValidate:
     def __init__(self, db: AsyncSession):
         self.db = db
 
-    async def check_user_email(self, user_in: UserCreate):
+    async def check_user_email(
+        self,
+        user_in: UserCreate
+    ):
         """Проверка пользоватлея в бд по email."""
 
         result = await self.db.execute(

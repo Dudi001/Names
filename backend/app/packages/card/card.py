@@ -1,4 +1,3 @@
-# app/packages/card.py
 import datetime
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, update, func, case, and_

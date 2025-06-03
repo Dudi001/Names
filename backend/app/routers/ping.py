@@ -1,4 +1,3 @@
-# backend/app/routers/ping.py
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 

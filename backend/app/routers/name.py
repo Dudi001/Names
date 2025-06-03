@@ -1,4 +1,3 @@
-# backend/app/routers/name.py
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, Row
@@ -29,5 +28,6 @@ async def get_users(
 async def test(
     db: AsyncSession = Depends(get_db)
 ):
+    """Метод служит для проверки работы бд"""
     result = await db.execute(select(Name).limit(1))
     return {"ok": True, "row": result.first()}
