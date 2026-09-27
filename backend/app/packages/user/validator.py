@@ -29,6 +29,19 @@ class UserValidate:
                 detail="Пользователь с таким email уже существует",
             )
 
+    async def check_username(self, user_in: UserCreate):
+        """Проверка пользователя в БД по логину."""
+        result = await self.db.execute(
+            select(UserModel).where(UserModel.username == user_in.username)
+        )
+        user = result.scalars().first()
+
+        if user:
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Пользователь с таким логином уже существует",
+            )
+
     async def check_user_id(
         self,
         user_id: str

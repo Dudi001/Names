@@ -41,12 +41,17 @@ document.addEventListener('DOMContentLoaded', () => {
   
     const DOM = initElements();
     if (!DOM) return;
+
+    const accessToken = localStorage.getItem('access_token');
+    if (!accessToken) {
+      window.location.replace('login.html');
+      return;
+    }
   
     const state = {
       currentMode: "transcription_to_translation",
       currentCards: [],
-      currentCardIndex: 0,
-      userID: 3 // TODO: брать id из авторизации
+      currentCardIndex: 0
     };
   
     const API_BASE_URL = '/api/v1';
@@ -65,13 +70,19 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json',
+              'Authorization': `Bearer ${accessToken}`,
               ...(options.headers || {})
             }
           });
   
           const data = await response.json();
-  
+
           if (!response.ok) {
+            if (response.status === 401) {
+              localStorage.removeItem('access_token');
+              window.location.replace('login.html');
+              return;
+            }
             throw new Error(data.detail || 'Произошла ошибка при выполнении запроса');
           }
   
@@ -89,7 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return api.request(`${API_BASE_URL}/flashcards/initialize`, {
           method: 'POST',
           body: JSON.stringify({
-            user_id: state.userID,
             mode: state.currentMode
           })
         });
@@ -99,15 +109,16 @@ document.addEventListener('DOMContentLoaded', () => {
        * Загружает статистику изучения для текущего пользователя
        */
       async loadLearningStats() {
-        return api.request(`${API_BASE_URL}/flashcards/stats?user_id=${state.userID}&mode=${state.currentMode}`);
+        return api.request(`${API_BASE_URL}/flashcards/stats?mode=${state.currentMode}`);
       },
   
       /**
        * Загружает карточки для изучения на сегодня
        */
       async loadDueCards() {
+        const limit = DOM.cardsLimitSelect.value === 'all' ? 99 : DOM.cardsLimitSelect.value;
         const cards = await api.request(
-            `${API_BASE_URL}/flashcards/due?user_id=${state.userID}&mode=${state.currentMode}&limit=${DOM.cardsLimitSelect.value}`
+            `${API_BASE_URL}/flashcards/due?mode=${state.currentMode}&limit=${limit}`
         );
         console.log(`Вот значение селектора: -- ${DOM.cardsLimitSelect.value}`)
         state.currentCards = cards;
@@ -124,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return api.request(`${API_BASE_URL}/flashcards/review`, {
           method: 'POST',
           body: JSON.stringify({
-            user_id: state.userID,
             name_id: nameId,
             mode: state.currentMode,
             quality: quality

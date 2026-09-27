@@ -8,7 +8,7 @@ from app.models.user import UserModel
 from app.packages.user.validator import UserValidate
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/v1/user/login")
 
 
 async def get_current_user(
@@ -28,15 +28,15 @@ async def get_current_user(
         user_id: str = payload.get("sub")
 
         if user_id is None:
-            HTTPException(
+            raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Не удалось проверить учетные данные",
             )
-    except JWTError:
-        HTTPException(
+    except JWTError as exc:
+        raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Не удалось проверить учетные данные",
-        )
+        ) from exc
 
     user = await UserValidate(db).check_user_id(user_id)
 
