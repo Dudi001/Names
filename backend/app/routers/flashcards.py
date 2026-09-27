@@ -1,7 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.config.database import get_db
+from app.models.user import UserModel
 from app.packages.card.card import FlashcardManager
+from app.packages.user.dependencies import get_current_user
 from app.schema.cards import (InitializeLearningRequest, ReviewCardRequest)
 from typing import Optional
 from fastapi.encoders import jsonable_encoder
@@ -13,6 +15,7 @@ worker = APIRouter()
 @worker.post("/initialize", status_code=201)
 async def initialize_learning(
     request: InitializeLearningRequest,
+    current_user: UserModel = Depends(get_current_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -21,7 +24,7 @@ async def initialize_learning(
     try:
         manager = FlashcardManager(db)
         await manager.initialize_learning_for_user(
-            request.user_id,
+            current_user.user_id,
             request.mode
         )
         return {"status": "success", "message": "Learning initialized"}
@@ -33,9 +36,9 @@ async def initialize_learning(
 
 @worker.get("/due")
 async def get_due_cards(
-    user_id: int,
     mode: str,
     limit: int = 20,
+    current_user: UserModel = Depends(get_current_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -43,7 +46,7 @@ async def get_due_cards(
     """
     try:
         manager = FlashcardManager(db)
-        cards = await manager.get_due_cards(user_id, mode, limit)
+        cards = await manager.get_due_cards(current_user.user_id, mode, limit)
         return jsonable_encoder(cards)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -54,6 +57,7 @@ async def get_due_cards(
 @worker.post("/review")
 async def review_card(
     request: ReviewCardRequest,
+    current_user: UserModel = Depends(get_current_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -62,7 +66,7 @@ async def review_card(
     try:
         manager = FlashcardManager(db)
         await manager.review_card(
-            request.user_id,
+            current_user.user_id,
             request.name_id,
             request.mode,
             request.quality
@@ -76,8 +80,8 @@ async def review_card(
 
 @worker.get("/stats")
 async def get_learning_stats(
-    user_id: int,
     mode: Optional[str] = None,
+    current_user: UserModel = Depends(get_current_user),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -85,7 +89,7 @@ async def get_learning_stats(
     """
     try:
         manager = FlashcardManager(db)
-        stats = await manager.get_learning_stats(user_id, mode)
+        stats = await manager.get_learning_stats(current_user.user_id, mode)
         return jsonable_encoder(stats)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))

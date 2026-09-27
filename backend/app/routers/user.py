@@ -22,6 +22,7 @@ async def registration(
     """Регистрация пользователя."""
 
     await UserValidate(db).check_user_email(user_in)
+    await UserValidate(db).check_username(user_in)
     new_user = await User(db).add_new_user(user_in)
 
     return {
@@ -54,5 +55,7 @@ async def read_profile(
 
     return {
         "email": current_user.email,
-        "id": current_user.user_id
+        "id": current_user.user_id,
+        "username": current_user.username,
+        "first_name": current_user.first_name,
     }

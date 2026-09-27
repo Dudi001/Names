@@ -6,6 +6,8 @@ const modal = document.getElementById("detailsModal");
 const closeModalButton = document.getElementById("closeModal");
 const themeToggle = document.getElementById("themeToggle");
 const searchContainer = document.getElementById("searchContainer");
+const registrationLink = document.getElementById("registrationLink");
+const profileLink = document.getElementById("profileLink");
 
 // Элементы для сайдбара (на больших экранах)
 const sidebarDetails = document.getElementById("sidebarDetails");
@@ -21,6 +23,32 @@ const modalTranslation = document.getElementById("modalTranslation");
 const modalTafsir = document.getElementById("modalTafsir");
 
 let allNames = [];
+
+function setupAccountLink() {
+    const token = localStorage.getItem('access_token');
+    if (!token) return;
+
+    registrationLink.classList.add('hidden');
+    profileLink.classList.remove('hidden');
+    profileLink.classList.add('flex');
+
+    fetch('/api/v1/user/me', {
+        headers: { Authorization: `Bearer ${token}` }
+    })
+        .then(response => {
+            if (!response.ok) throw new Error('Unauthorized');
+            return response.json();
+        })
+        .then(profile => {
+            profileLink.textContent = (profile.first_name || profile.username || '?').charAt(0).toUpperCase();
+        })
+        .catch(() => {
+            localStorage.removeItem('access_token');
+            registrationLink.classList.remove('hidden');
+            profileLink.classList.add('hidden');
+            profileLink.classList.remove('flex');
+        });
+}
 
 async function fetchNames() {
     try {
@@ -187,6 +215,7 @@ searchInput.addEventListener("input", (e) => renderNames(e.target.value));
 
 // Запускаем загрузку при открытии страницы
 loadNames();
+setupAccountLink();
 
 // Проверка текущей темы
 if (localStorage.getItem('theme') === 'dark' || 
